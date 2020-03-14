@@ -105,6 +105,7 @@ export type RenderFunction = {
 }
 
 export interface ComponentInternalInstance {
+  uid: number
   type: FunctionalComponent | ComponentOptions
   parent: ComponentInternalInstance | null
   appContext: AppContext
@@ -173,6 +174,8 @@ export interface ComponentInternalInstance {
 
 const emptyAppContext = createAppContext()
 
+let uid = 0
+
 export function createComponentInstance(
   vnode: VNode,
   parent: ComponentInternalInstance | null
@@ -181,6 +184,7 @@ export function createComponentInstance(
   const appContext =
     (parent ? parent.appContext : vnode.appContext) || emptyAppContext
   const instance: ComponentInternalInstance = {
+    uid: uid++,
     vnode,
     parent,
     appContext,

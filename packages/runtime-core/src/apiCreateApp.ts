@@ -12,6 +12,8 @@ import { InjectionKey } from './apiInject'
 import { isFunction, NO, isObject } from '@vue/shared'
 import { warn } from './warning'
 import { createVNode, cloneVNode, VNode } from './vnode'
+import { initDevtools } from './devtools'
+import { version } from '.'
 
 export interface App<HostElement = any> {
   config: AppConfig
@@ -238,6 +240,8 @@ export function createAppAPI<HostNode, HostElement>(
         return app
       }
     }
+
+    initDevtools(app, version)
 
     return app
   }

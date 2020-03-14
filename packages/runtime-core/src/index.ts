@@ -106,6 +106,9 @@ export { toDisplayString, camelize } from '@vue/shared'
 // For integration with runtime compiler
 export { registerRuntimeCompiler } from './component'
 
+// For devtools
+export { devtools, setDevtoolsHook, initDevtools } from './devtools'
+
 // SSR -------------------------------------------------------------------------
 
 import { createComponentInstance, setupComponent } from './component'
