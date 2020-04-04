@@ -25,6 +25,9 @@ let renderer: Renderer | HydrationRenderer
 
 let enabledHydration = false
 
+/**
+ * 确保渲染器存在
+ */
 function ensureRenderer() {
   return renderer || (renderer = createRenderer(rendererOptions))
 }
