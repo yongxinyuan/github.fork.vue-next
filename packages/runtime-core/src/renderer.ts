@@ -325,7 +325,13 @@ function baseCreateRenderer(
   createHydrationFns: typeof createHydrationFunctions
 ): HydrationRenderer
 
-// implementation
+/**
+ * 基础创建渲染器
+ * 
+ * @param options 
+ * @param createHydrationFns 
+ * @returns { render, hydrate, createApp }
+ */
 function baseCreateRenderer(
   options: RendererOptions,
   createHydrationFns?: typeof createHydrationFunctions
