@@ -68,18 +68,44 @@ export const createApp = ((...args) => {
   const { mount } = app
   /**
    * 3. 重写app.mount()函数
+   * 
+   * @param { Element | string } 容器元素或者容器元素选择器字符串
    */
   app.mount = (containerOrSelector: Element | string): any => {
+    /**
+     * 标准化容器，获取对应的元素
+     */
     const container = normalizeContainer(containerOrSelector)
+    /**
+     * 如果没有对应的容器，退出执行
+     */
     if (!container) return
+    /**
+     * 从app._component属性获取根组件
+     */
     const component = app._component
+    /**
+     * 如果根组件不是函数，没有render属性，也没有template属性
+     * 设置根组件的模版为容器里的内容
+     */
     if (!isFunction(component) && !component.render && !component.template) {
       component.template = container.innerHTML
     }
-    // clear content before mounting
+    /**
+     * 在开始安装之前，清空容器里的元素
+     */
     container.innerHTML = ''
+    /**
+     * 执行原始的app.mount()函数，返回代理
+     */
     const proxy = mount(container)
+    /**
+     * 移除容器上的v-cloak属性
+     */
     container.removeAttribute('v-cloak')
+    /**
+     * 返回代理
+     */
     return proxy
   }
 
