@@ -46,6 +46,9 @@ export const hydrate = ((...args) => {
   ensureHydrationRenderer().hydrate(...args)
 }) as RootHydrateFunction
 
+/**
+ * 创建应用程序，入口API
+ */
 export const createApp = ((...args) => {
   const app = ensureRenderer().createApp(...args)
 
