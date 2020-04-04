@@ -116,7 +116,15 @@ function injectNativeTagCheck(app: App) {
   })
 }
 
+/**
+ * 规范化容器
+ * 
+ * @param container 
+ */
 function normalizeContainer(container: Element | string): Element | null {
+  /**
+   * 如果容器是字符串，返回选择器对应的元素
+   */
   if (isString(container)) {
     const res = document.querySelector(container)
     if (__DEV__ && !res) {
@@ -124,6 +132,9 @@ function normalizeContainer(container: Element | string): Element | null {
     }
     return res
   }
+  /**
+   * 如果原本就是元素，直接返回
+   */
   return container
 }
 
