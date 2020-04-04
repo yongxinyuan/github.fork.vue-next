@@ -50,13 +50,22 @@ export const hydrate = ((...args) => {
  * 创建应用程序，入口API
  */
 export const createApp = ((...args) => {
+  /**
+   * 1. 根据参数创建app
+   */
   const app = ensureRenderer().createApp(...args)
 
   if (__DEV__) {
     injectNativeTagCheck(app)
   }
 
+  /**
+   * 2. 获取app.mount()函数
+   */
   const { mount } = app
+  /**
+   * 3. 重写app.mount()函数
+   */
   app.mount = (containerOrSelector: Element | string): any => {
     const container = normalizeContainer(containerOrSelector)
     if (!container) return
@@ -71,6 +80,9 @@ export const createApp = ((...args) => {
     return proxy
   }
 
+  /**
+   * 4. 返回app
+   */
   return app
 }) as CreateAppFunction<Element>
 
