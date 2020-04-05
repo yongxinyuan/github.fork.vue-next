@@ -78,8 +78,8 @@ type PluginInstallFunction = (app: App, ...options: any[]) => any
 export type Plugin =
   | PluginInstallFunction & { install?: PluginInstallFunction }
   | {
-      install: PluginInstallFunction
-    }
+    install: PluginInstallFunction
+  }
 
 export function createAppContext(): AppContext {
   return {
@@ -105,6 +105,12 @@ export type CreateAppFunction<HostElement> = (
   rootProps?: Data | null
 ) => App<HostElement>
 
+/**
+ * 创建createApp函数
+ * 
+ * @param render 环境渲染函数
+ * @param hydrate 
+ */
 export function createAppAPI<HostElement>(
   render: RootRenderFunction,
   hydrate?: RootHydrateFunction
