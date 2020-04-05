@@ -81,6 +81,9 @@ export type Plugin =
     install: PluginInstallFunction
   }
 
+/**
+ * 创建app上下文，返回一个对象
+ */
 export function createAppContext(): AppContext {
   return {
     config: {
