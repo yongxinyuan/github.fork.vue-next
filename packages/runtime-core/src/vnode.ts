@@ -35,7 +35,7 @@ import { RendererNode, RendererElement } from './renderer'
 
 export const Fragment = (Symbol(__DEV__ ? 'Fragment' : undefined) as any) as {
   __isFragment: true
-  new (): {
+  new(): {
     $props: VNodeProps
   }
 }
@@ -87,7 +87,7 @@ type VNodeChildAtom = VNode | string | number | boolean | null | void
 export interface VNodeArrayChildren<
   HostNode = RendererNode,
   HostElement = RendererElement
-> extends Array<VNodeArrayChildren | VNodeChildAtom> {}
+  > extends Array<VNodeArrayChildren | VNodeChildAtom> { }
 
 export type VNodeChild = VNodeChildAtom | VNodeArrayChildren
 
@@ -214,9 +214,9 @@ export function isSameVNodeType(n1: VNode, n2: VNode): boolean {
 
 let vnodeArgsTransformer:
   | ((
-      args: Parameters<typeof _createVNode>,
-      instance: ComponentInternalInstance | null
-    ) => Parameters<typeof _createVNode>)
+    args: Parameters<typeof _createVNode>,
+    instance: ComponentInternalInstance | null
+  ) => Parameters<typeof _createVNode>)
   | undefined
 
 // Internal API for registering an arguments transform for createVNode
@@ -235,6 +235,9 @@ const createVNodeWithArgsTransform = (
   )
 }
 
+/**
+ * 根据环境配置不同的createVNode()函数
+ */
 export const createVNode = (__DEV__
   ? createVNodeWithArgsTransform
   : _createVNode) as typeof _createVNode
@@ -438,7 +441,7 @@ export function normalizeChildren(vnode: VNode, children: unknown) {
     } else {
       type = ShapeFlags.SLOTS_CHILDREN
       if (!(children as RawSlots)._) {
-        ;(children as RawSlots)._ctx = currentRenderingInstance
+        ; (children as RawSlots)._ctx = currentRenderingInstance
       }
     }
   } else if (isFunction(children)) {
