@@ -118,17 +118,35 @@ export function createAppAPI<HostElement>(
   render: RootRenderFunction,
   hydrate?: RootHydrateFunction
 ): CreateAppFunction<HostElement> {
+  /**
+   * createApp()函数对应renderer.createApp()函数
+   */
   return function createApp(rootComponent, rootProps = null) {
+    /**
+     * rootProps必须是对象，否则重制为null
+     */
     if (rootProps != null && !isObject(rootProps)) {
       __DEV__ && warn(`root props passed to app.mount() must be an object.`)
       rootProps = null
     }
 
+    /**
+     * 创建app上下文对象
+     */
     const context = createAppContext()
+    /**
+     * 创建一个Set保存安装的插件
+     */
     const installedPlugins = new Set()
 
+    /**
+     * 标记未创建完成
+     */
     let isMounted = false
 
+    /**
+     * 创建一个app对象
+     */
     const app: App = {
       _component: rootComponent as Component,
       _props: rootProps,
@@ -159,7 +177,7 @@ export function createAppAPI<HostElement>(
         } else if (__DEV__) {
           warn(
             `A plugin must either be a function or an object with an "install" ` +
-              `function.`
+            `function.`
           )
         }
         return app
@@ -172,7 +190,7 @@ export function createAppAPI<HostElement>(
           } else if (__DEV__) {
             warn(
               'Mixin has already been applied to target app' +
-                (mixin.name ? `: ${mixin.name}` : '')
+              (mixin.name ? `: ${mixin.name}` : '')
             )
           }
         } else if (__DEV__) {
@@ -251,7 +269,7 @@ export function createAppAPI<HostElement>(
         if (__DEV__ && key in context.provides) {
           warn(
             `App already provides property with key "${key}". ` +
-              `It will be overwritten with the new value.`
+            `It will be overwritten with the new value.`
           )
         }
         // TypeScript doesn't allow symbols as index type
@@ -262,6 +280,9 @@ export function createAppAPI<HostElement>(
       }
     }
 
+    /**
+     * 返回创建的app对象
+     */
     return app
   }
 }
