@@ -228,29 +228,65 @@ export function createAppAPI<HostElement>(
         return app
       },
 
+      /**
+       * 原始app.mount()函数
+       * 
+       * @param rootContainer 根容器
+       * @param isHydrate 是否需要混合
+       */
       mount(rootContainer: HostElement, isHydrate?: boolean): any {
+        /**
+         * 读取标记mounted未创建，执行创建
+         */
         if (!isMounted) {
+          /**
+           * 1. 根据创建传入的参数，创建VNode
+           */
           const vnode = createVNode(rootComponent as Component, rootProps)
           // store app context on the root VNode.
           // this will be set on the root instance on initial mount.
+          /**
+           * 2. 将app上下文存储到根VNode上，将在初始化安装时设置到根实例上
+           */
           vnode.appContext = context
 
-          // HMR root reload
+          /**
+           * 开发环境热更新，暂不考虑
+           */
           if (__BUNDLER__ && __DEV__) {
             context.reload = () => {
               render(cloneVNode(vnode), rootContainer)
             }
           }
 
+          /**
+           * 渲染VNode到根容器中
+           */
           if (isHydrate && hydrate) {
             hydrate(vnode as VNode<Node, Element>, rootContainer as any)
           } else {
             render(vnode, rootContainer)
           }
+
+          /**
+           * 标记已经安装成功
+           */
           isMounted = true
+
+          /**
+           * 将容器元素绑定到app._container上
+           */
           app._container = rootContainer
+
+          /**
+           * 返回proxy，这里的写法是什么意思？
+           */
           return vnode.component!.proxy
-        } else if (__DEV__) {
+        }
+        /**
+         * 如果标记已经创建完成，并且是开发环境，抛出警告
+         */
+        else if (__DEV__) {
           warn(
             `App has already been mounted. Create a new app instance instead.`
           )
