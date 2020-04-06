@@ -71,6 +71,12 @@ export const isPromise = <T = any>(val: unknown): val is Promise<T> => {
  * object.prototype.toString函数
  */
 export const objectToString = Object.prototype.toString
+
+/**
+ * Object.prototype.toString.call()
+ * 
+ * @param value 
+ */
 export const toTypeString = (value: unknown): string =>
   objectToString.call(value)
 
