@@ -119,6 +119,15 @@ export function shallowReactive<T extends object>(target: T): T {
   )
 }
 
+/**
+ * 创建响应式对象
+ * 
+ * @param target 被监听的目标
+ * @param toProxy target<->proxy 搜集器
+ * @param toRaw proxy<->target 搜集器
+ * @param baseHandlers 基础代理函数
+ * @param collectionHandlers 搜集代理函数
+ */
 function createReactiveObject(
   target: unknown,
   toProxy: WeakMap<any, any>,
@@ -126,31 +135,63 @@ function createReactiveObject(
   baseHandlers: ProxyHandler<any>,
   collectionHandlers: ProxyHandler<any>
 ) {
+  /**
+   * 1. 如果不是对象，返回目标本身
+   */
   if (!isObject(target)) {
     if (__DEV__) {
       console.warn(`value cannot be made reactive: ${String(target)}`)
     }
     return target
   }
-  // target already has corresponding Proxy
+
+  /**
+   * 2. 在target<->proxy中代理，判断是否是可观察对象
+   */
   let observed = toProxy.get(target)
+
+  /**
+   * 3. 如果已经是可观察对象，返回可观察对象
+   */
   if (observed !== void 0) {
     return observed
   }
-  // target is already a Proxy
+  /**
+   * 4. 如果proxy<->target中存在目标，说明已经是代理对象了
+   *    返回代理对象本身
+   */
   if (toRaw.has(target)) {
     return target
   }
-  // only a whitelist of value types can be observed.
+
+  /**
+   * 5. 如果目标不是可观察对象，返回目标本身
+   */
   if (!canObserve(target)) {
     return target
   }
+
+  /**
+   * 6. 根据构造器类型判断，使用集合代理函数或者基础代理函数
+   */
   const handlers = collectionTypes.has(target.constructor)
     ? collectionHandlers
     : baseHandlers
+
+  /**
+   * 7. 创建代理
+   */
   observed = new Proxy(target, handlers)
+
+  /**
+   * 8. 存储原始对象和代理正反关系
+   */
   toProxy.set(target, observed)
   toRaw.set(observed, target)
+
+  /**
+   * 9. 返回代理对象
+   */
   return observed
 }
 
