@@ -242,6 +242,15 @@ export const createVNode = (__DEV__
   ? createVNodeWithArgsTransform
   : _createVNode) as typeof _createVNode
 
+/**
+ * 创建VNode函数
+ * 
+ * @param type 
+ * @param props 
+ * @param children 
+ * @param patchFlag 
+ * @param dynamicProps 
+ */
 function _createVNode(
   type: VNodeTypes | ClassComponent,
   props: (Data & VNodeProps) | null = null,
