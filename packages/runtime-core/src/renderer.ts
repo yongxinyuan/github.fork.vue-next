@@ -1933,6 +1933,12 @@ function baseCreateRenderer(
     }
   }
 
+  /**
+   * 根渲染函数
+   * 
+   * @param vnode 
+   * @param container 
+   */
   const render: RootRenderFunction = (vnode, container) => {
     if (vnode == null) {
       if (container._vnode) {
