@@ -205,6 +205,11 @@ export function isReactive(value: unknown): boolean {
   return reactiveToRaw.has(value) || readonlyToRaw.has(value)
 }
 
+/**
+ * 通过判断readonlyToRaw中是否存在value值，来判断是否是只读对象
+ * 
+ * @param value 
+ */
 export function isReadonly(value: unknown): boolean {
   return readonlyToRaw.has(value)
 }
