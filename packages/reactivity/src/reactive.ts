@@ -144,6 +144,12 @@ function createReactiveObject(
   return observed
 }
 
+/**
+ * 判断对象是否是响应式的
+ * reactiveToRaw或readonlyToRaw中含有value作为key值，都算是
+ * 
+ * @param value 
+ */
 export function isReactive(value: unknown): boolean {
   return reactiveToRaw.has(value) || readonlyToRaw.has(value)
 }
