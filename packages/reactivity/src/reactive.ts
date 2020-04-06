@@ -28,6 +28,16 @@ const isObservableType = /*#__PURE__*/ makeMap(
   'Object,Array,Map,Set,WeakMap,WeakSet'
 )
 
+/**
+ * 同时满足以下5中情况才是可观察对象
+ * 1. value._isVue = false
+ * 2. value.isVNode = false
+ * 3. 必须是定义的可观察类型
+ * 4. nonReactiveValues中没有目标的
+ * 5. 对象没有被冻结
+ * 
+ * @param value 观察对象
+ */
 const canObserve = (value: any): boolean => {
   return (
     !value._isVue &&
