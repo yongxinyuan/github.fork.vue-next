@@ -17,7 +17,7 @@ export const EMPTY_OBJ: { readonly [key: string]: any } = __DEV__
   : {}
 export const EMPTY_ARR: [] = []
 
-export const NOOP = () => {}
+export const NOOP = () => { }
 
 /**
  * Always return false.
@@ -31,7 +31,7 @@ export const extend = <T extends object, U extends object>(
   b: U
 ): T & U => {
   for (const key in b) {
-    ;(a as any)[key] = b[key]
+    ; (a as any)[key] = b[key]
   }
   return a as any
 }
@@ -54,6 +54,12 @@ export const isFunction = (val: unknown): val is Function =>
   typeof val === 'function'
 export const isString = (val: unknown): val is string => typeof val === 'string'
 export const isSymbol = (val: unknown): val is symbol => typeof val === 'symbol'
+
+/**
+ * 判断是否是对象
+ * 
+ * @param val 
+ */
 export const isObject = (val: unknown): val is Record<any, any> =>
   val !== null && typeof val === 'object'
 
@@ -74,9 +80,9 @@ export const isPlainObject = (val: unknown): val is object =>
 
 export const isReservedProp = /*#__PURE__*/ makeMap(
   'key,ref,' +
-    'onVnodeBeforeMount,onVnodeMounted,' +
-    'onVnodeBeforeUpdate,onVnodeUpdated,' +
-    'onVnodeBeforeUnmount,onVnodeUnmounted'
+  'onVnodeBeforeMount,onVnodeMounted,' +
+  'onVnodeBeforeUpdate,onVnodeUpdated,' +
+  'onVnodeBeforeUnmount,onVnodeUnmounted'
 )
 
 const cacheStringFunction = <T extends (str: string) => string>(fn: T): T => {
