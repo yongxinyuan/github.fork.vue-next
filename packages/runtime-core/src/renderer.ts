@@ -1967,6 +1967,9 @@ function baseCreateRenderer(
     >)
   }
 
+  /**
+   * renderer
+   */
   return {
     render,
     hydrate,
