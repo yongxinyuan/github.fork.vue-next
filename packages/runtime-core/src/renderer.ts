@@ -1940,14 +1940,32 @@ function baseCreateRenderer(
    * @param container 
    */
   const render: RootRenderFunction = (vnode, container) => {
+    /**
+     * 1. 如果vnode不存在
+     */
     if (vnode == null) {
+      /**
+       * 如果不存在vnode，却有container._vnode，卸载container._vnode
+       */
       if (container._vnode) {
         unmount(container._vnode, null, null, true)
       }
-    } else {
+    }
+    /**
+     * 2. vnode存在，但是container._vnode不一定存在
+     * 进行补丁操作
+     */
+    else {
       patch(container._vnode || null, vnode, container)
     }
+    /**
+     * 3. 刷新回调函数，这里待确定？？？
+     */
     flushPostFlushCbs()
+
+    /**
+     * 4. 将vnode绑定到container._vnode上
+     */
     container._vnode = vnode
   }
 
