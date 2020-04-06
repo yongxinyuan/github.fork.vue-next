@@ -80,6 +80,12 @@ export const objectToString = Object.prototype.toString
 export const toTypeString = (value: unknown): string =>
   objectToString.call(value)
 
+/**
+ * [object string], [object object]
+ * 也就是获取的类型字符串
+ * 
+ * @param value 
+ */
 export const toRawType = (value: unknown): string => {
   return toTypeString(value).slice(8, -1)
 }
